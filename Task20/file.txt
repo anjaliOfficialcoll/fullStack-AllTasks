@@ -1,0 +1,2 @@
+Line 1: Original content
+Line 2: This line will be modified differently in branches
