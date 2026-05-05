@@ -1,0 +1,29 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - run: pip install -r requirements.txt
+
+    - run: pytest tests/
+
+    - run: zip -r app.zip .
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: app-zip
+        path: app.zip
+
+    - run: bash deploy.sh
